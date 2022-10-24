@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clarity.mapper.BookMapper">
+
+    <!-- 结果集映射 -->
+    <resultMap id="booksMap" type="books">
+        <result column="book_id" property="bookID"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_counts" property="bookCounts"/>
+        <result column="detail" property="detail"/>
+    </resultMap>
+
+    <insert id="insertBook" parameterType="books">
+        insert into ssmreview.books (book_name, book_counts, detail)
+        values (#{bookName}, #{bookCounts}, #{detail});
+    </insert>
+
+    <delete id="deleteBookById" parameterType="_int">
+        delete
+        from ssmreview.books
+        where book_id = #{id};
+    </delete>
+
+    <update id="updateBook" parameterType="books">
+        update ssmreview.books
+        set book_name = #{bookName}, book_counts = #{bookCounts}, detail = #{detail}
+        where book_id = #{bookID};
+    </update>
+
+    <select id="queryBookById" parameterType="_int" resultMap="booksMap">
+        select *
+        from ssmreview.books
+        where book_id = #{id};
+    </select>
+
+    <select id="queryAllBook" resultMap="booksMap">
+        select *
+        from ssmreview.books;
+    </select>
+
+</mapper>
